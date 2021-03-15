@@ -1,20 +1,29 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { connect } from "react-redux";
 
-const App = () => {
-  //O hook useSelector é utilizado para termos acesso ao estado do Redux em qualquer local da nossa aplicação.
-  const state = useSelector((state) => state);
-  // O hook useDispatch é utilizado para despacharmos ações para a nossa store.
-  const dispatch = useDispatch();
+const incrementar = () => ({ type: "INCREMENTAR" });
 
+const App = ({ contador, incrementar }) => {
   return (
     <div>
-      <h1>Total: {state}</h1>
-      <button onClick={() => dispatch({ type: "INCREMENTAR" })}>
-        Incrementar
-      </button>
+      <h1>Total: {contador}</h1>
+      <button onClick={incrementar}>Incrementar</button>
     </div>
   );
 };
 
-export default App;
+// Antes dos hooks, era necessario conectarmos o Redux ao componente
+// para utilizar o estado/dispatch.
+const mapStateToProps = (state) => {
+  return {
+    contador: state,
+  };
+};
+
+// Com o mapDispatchToProps não precisamos utilizar o dispatch para
+// dispararmos uma função.
+const mapDispatchToProps = {
+  incrementar,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
