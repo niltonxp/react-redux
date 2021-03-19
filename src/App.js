@@ -1,6 +1,7 @@
 // App.js
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { somar } from "./store/contador";
 import { login } from "./store/login";
 
 function App() {
@@ -16,28 +17,32 @@ function App() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label style={{ display: "block" }} htmlFor="username">
-        Usuário
-      </label>
-      <input
-        id="username"
-        type="text"
-        value={username}
-        onChange={({ target }) => setUsername(target.value)}
-      />
-      <label style={{ display: "block" }} htmlFor="password">
-        Senha
-      </label>
-      <input
-        id="password"
-        type="text"
-        value={password}
-        onChange={({ target }) => setPassword(target.value)}
-      />
-      <button onClick={handleSubmit}>Enviar</button>
-      <p>{data?.email}</p>
-    </form>
+    <>
+      <form onSubmit={handleSubmit}>
+        <label style={{ display: "block" }} htmlFor="username">
+          Usuário
+        </label>
+        <input
+          id="username"
+          type="text"
+          value={username}
+          onChange={({ target }) => setUsername(target.value)}
+        />
+        <label style={{ display: "block" }} htmlFor="password">
+          Senha
+        </label>
+        <input
+          id="password"
+          type="text"
+          value={password}
+          onChange={({ target }) => setPassword(target.value)}
+        />
+        <button onClick={handleSubmit}>Enviar</button>
+        <p>{data?.email}</p>
+      </form>
+
+      <button onClick={() => dispatch(somar(5))}>Somar | Test "Prepare"</button>
+    </>
   );
 }
 
