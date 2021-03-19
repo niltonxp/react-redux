@@ -1,7 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+const { createSlice } = require('@reduxjs/toolkit');
 
 const slice = createSlice({
-  name: "modal",
+  name: 'modal',
   initialState: false,
   reducers: {
     abrir: () => true,

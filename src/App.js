@@ -1,15 +1,18 @@
-// App.js
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { somar } from "./store/contador";
-import { login } from "./store/login";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { somar } from './store/contador';
+import { autoLogin, login } from './store/login';
 
 function App() {
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [username, setUsername] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const dispatch = useDispatch();
 
   const { data } = useSelector((state) => state.login.user);
-  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(autoLogin());
+  }, [dispatch]);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -17,9 +20,9 @@ function App() {
   }
 
   return (
-    <>
+    <div>
       <form onSubmit={handleSubmit}>
-        <label style={{ display: "block" }} htmlFor="username">
+        <label style={{ display: 'block' }} htmlFor="username">
           Usuário
         </label>
         <input
@@ -28,7 +31,7 @@ function App() {
           value={username}
           onChange={({ target }) => setUsername(target.value)}
         />
-        <label style={{ display: "block" }} htmlFor="password">
+        <label style={{ display: 'block' }} htmlFor="password">
           Senha
         </label>
         <input
@@ -37,12 +40,11 @@ function App() {
           value={password}
           onChange={({ target }) => setPassword(target.value)}
         />
-        <button onClick={handleSubmit}>Enviar</button>
-        <p>{data?.email}</p>
+        <button>Enviar</button>
       </form>
-
-      <button onClick={() => dispatch(somar(5))}>Somar | Test "Prepare"</button>
-    </>
+      <p>{data?.email}</p>
+      <button onClick={() => dispatch(somar(5))}>Somar</button>
+    </div>
   );
 }
 
