@@ -1,15 +1,7 @@
-import {
-  combineReducers,
-  configureStore,
-  getDefaultMiddleware,
-} from "@reduxjs/toolkit";
-import login from "./login";
-import photos from "./photos";
-import localStorage from "./middleware/localStorage";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import date from "./date";
 
-const middleware = [...getDefaultMiddleware(), localStorage];
-
-const reducer = combineReducers({ login, photos });
-const store = configureStore({ reducer, middleware });
+const reducer = combineReducers({ date });
+const store = configureStore({ reducer });
 
 export default store;

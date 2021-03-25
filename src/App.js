@@ -1,23 +1,41 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { autoLogin } from "./store/login";
-import Content from "./Components/Content";
-import Header from "./Components/Header";
-
-import "./App.css";
+import { addData } from "./store/date";
 
 function App() {
+  const [partida, setPartida] = React.useState();
+  const [retorno, setRetorno] = React.useState();
+
   const dispatch = useDispatch();
 
-  React.useEffect(() => {
-    dispatch(autoLogin());
-  }, [dispatch]);
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    dispatch(addData({ retorno, partida }));
+  }
 
   return (
-    <div className="container">
-      <Header />
-      <Content />
-    </div>
+    <form onSubmit={handleSubmit}>
+      <p>
+        <label htmlFor="partida">Partida</label>
+        <input
+          type="date"
+          id="partida"
+          value={partida}
+          onChange={({ target }) => setPartida(target.value)}
+        />
+      </p>
+      <p>
+        <label htmlFor="retorno">Retorno</label>
+        <input
+          type="date"
+          id="retorno"
+          value={retorno}
+          onChange={({ target }) => setRetorno(target.value)}
+        />
+      </p>
+      <button>Buscar</button>
+    </form>
   );
 }
 
