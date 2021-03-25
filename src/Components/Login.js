@@ -15,7 +15,7 @@ const Login = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="anime">
       <label className={styles.label} htmlFor="username">
         Usuário
       </label>

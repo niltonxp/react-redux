@@ -4,12 +4,12 @@ import { useSelector } from "react-redux";
 import styles from "./PhotosContent.module.css";
 
 const PhotosContent = () => {
-  const { data } = useSelector((state) => state.photos);
+  const { list } = useSelector((state) => state.photos);
 
   return (
     <ul className={styles.list}>
-      {data.map((photo) => (
-        <li className={styles.item} key={photo.id}>
+      {list.map((photo) => (
+        <li className={`anime ${styles.item}`} key={photo.id}>
           <img className={styles.img} src={photo.src} alt={photo.title} />
           <h2 className={styles.title}>{photo.title}</h2>
           <span className={styles.access}>{photo.acessos}</span>
