@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 /**
  * Cria um slice com uma função assíncrona
@@ -15,6 +15,8 @@ const createAsyncSlice = (config) => {
       loading: false,
       data: null,
       error: null,
+      lastUpdate: 0,
+      cache: 60000,
       ...config.initialState,
     },
     reducers: {
@@ -31,18 +33,28 @@ const createAsyncSlice = (config) => {
         state.data = null;
         state.error = action.payload;
       },
+      updateTime(state, action) {
+        state.lastUpdate = action.payload;
+      },
       ...config.reducers,
     },
   });
 
-  const { fetchStarted, fetchSuccess, fetchError } = slice.actions;
+  const { fetchStarted, fetchSuccess, fetchError, updateTime } = slice.actions;
 
-  const asyncAction = (payload) => async (dispatch) => {
+  const asyncAction = (payload) => async (dispatch, getState) => {
+    // Verifica se o último update é maior que o tempo atual - cache
+    const { lastUpdate, cache } = getState()[slice.name];
+    if (lastUpdate > Date.now() - cache) return;
+
     try {
       dispatch(fetchStarted());
       const { url, options } = config.fetchConfig(payload);
       const response = await fetch(url, options);
       const data = await response.json();
+
+      dispatch(updateTime(Date.now()));
+
       return dispatch(fetchSuccess(data));
     } catch (error) {
       return dispatch(fetchError(error.message));
