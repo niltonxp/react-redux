@@ -1,10 +1,23 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-const Products = () => {
-  const { data } = useSelector((state) => state.products);
+const filterColors = (colors) => (product) =>
+  !colors.length || colors.includes(product.color);
 
-  console.log(data);
+const filterPrices = (prices) => (product) =>
+  (!prices.max || product.price <= prices.max) &&
+  (!prices.min || product.price >= prices.min);
+
+const filterProducts = ({ products }) => {
+  const { data, filters } = products;
+
+  return data
+    .filter(filterColors(filters.colors))
+    .filter(filterPrices(filters.prices));
+};
+
+const Products = () => {
+  const data = useSelector(filterProducts);
 
   return (
     <table>
