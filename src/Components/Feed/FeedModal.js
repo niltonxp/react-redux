@@ -1,13 +1,13 @@
-import React from "react";
-import styles from "./FeedModal.module.css";
-import Error from "../Helper/Error";
-import Loading from "../Helper/Loading";
-import PhotoContent from "../Photo/PhotoContent";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchPhoto } from "../../store/reducer/photo";
+import React from 'react';
+import styles from './FeedModal.module.css';
+import Error from '../Helper/Error';
+import Loading from '../Helper/Loading';
+import PhotoContent from '../Photo/PhotoContent';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPhoto } from '../../store/photo';
 
 const FeedModal = ({ photo, setModalPhoto }) => {
-  const { data, loading, error } = useSelector((state) => state.photo);
+  const { loading, error, data } = useSelector((state) => state.photo);
   const dispatch = useDispatch();
 
   React.useEffect(() => {
