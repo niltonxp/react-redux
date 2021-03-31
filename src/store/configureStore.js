@@ -1,7 +1,13 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import products from "./reducers/products";
+import {
+  combineReducers,
+  configureStore,
+  getDefaultMiddleware,
+} from "@reduxjs/toolkit";
 
-const reducer = combineReducers({ products });
-const store = configureStore({ reducer });
+import photo from "./reducer/photo";
+
+const middleware = [...getDefaultMiddleware()];
+const reducer = combineReducers({ photo });
+const store = configureStore({ reducer, middleware });
 
 export default store;
